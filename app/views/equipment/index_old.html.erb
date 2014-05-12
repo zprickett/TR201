@@ -1,0 +1,136 @@
+<h2>Duration By Location</h2>
+<canvas id="duration_location_chart" width="800" height="400"></canvas>
+<h2>Haulage By Location</h2>
+<canvas id="haulage_location_chart" width="800" height="400"></canvas>
+<h2>Haulage/Duration By Location</h2>
+<canvas id="haulage_duration_location_chart" width="800" height="400"></canvas>
+<h2>Haulage By Truck</h2>
+<canvas id="haulage_truck_chart" width="800" height="400"></canvas>
+<table>
+  <thead>
+    <tr>
+      <th>Equipment Code</th>
+      <th>Equipment Model</th>
+      <th>Equipment Model Code</th>
+      <th>Location</th>
+      <th>Total Quantity Hauled</td>
+      <th>Duration Loading</th>
+      <th>Haul per minute loading</th>
+      <th>Haul per minute travel loaded</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @equipment.each do |equip| %>
+    <tr>
+      <th><a href="<%= equipment_path(equip['EquipmentCode'])%>"><%= equip['EquipmentCode'] %></a></th>
+      <td><%= equip['Equipment_Model'] %></td>
+      <td><%= equip['Equipment_Model_Code'] %></td>
+      <td><%= equip['Location'] %></td>
+      <td><%= number_with_precision (equip['total_quantity']) %> </td>
+      <td><%= equip['total_duration'] %> </td>
+      <td><%= number_with_precision ((equip['hauled_per_second_loading'] / 60) * 1000) %> kg</td>
+      <td><%= number_with_precision ((equip['hauled_per_second_loaded'] / 60) * 1000) %> kg</td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<table>
+  <thead>
+    <tr>
+      <th>Equipment Code</th>
+      <th>Equipment Model</th>
+      <th>Equipment Model Code</th>
+      <th>Location</th>
+      <th>Total Quantity Hauled</th>
+      <th>Duration Loading</th>
+      <th>Haul per minute loading</th>
+      <th>Haul per minute travel loaded</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @equipment.each do |equip| %>
+    <tr>
+      <th><a href="<%= equipment_path(equip['EquipmentCode'])%>"><%= equip['EquipmentCode'] %></a></th>
+      <td><%= equip['Equipment_Model'] %></td>
+      <td><%= equip['Equipment_Model_Code'] %></td>
+      <td><%= equip['Location'] %></td>
+      <td><%= number_with_precision (equip['total_quantity']) %> </td>
+      <td><%= equip['total_duration'] %> </td>
+      <td><%= number_with_precision ((equip['hauled_per_second_loading'] / 60) * 1000) %> kg</td>
+      <td><%= number_with_precision ((equip['hauled_per_second_loaded'] / 60) * 1000) %> kg</td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<script>
+var data = {
+	labels : <%= @haulage_by_location.map { |h| h["Location"] }.to_s.html_safe %>,
+	datasets : [
+		{
+			fillColor : "rgba(220,220,0,0.5)",
+			strokeColor : "rgba(220,220,0,1)",
+			data : <%= @haulage_by_location.map { |h| h["DurationLoading"] }.to_s.html_safe %>
+		},
+		{
+			fillColor : "rgba(220,0,0,0.5)",
+			strokeColor : "rgba(220,0,0,1)",
+			data : <%= @haulage_by_location.map { |h| h["DurationTravelLoaded"] }.to_s.html_safe %>
+		},
+		{
+			fillColor : "rgba(0,220,0,0.5)",
+			strokeColor : "rgba(0,220,0,1)",
+			pointColor : "rgba(0,220,0,1)",
+      pointStrokeColor : "#fff",
+			data : <%= @haulage_by_location.map { |h| h["DurationTravelEmpty"] }.to_s.html_safe %>
+		},
+		{
+			fillColor : "rgba(0,0,220,0.5)",
+			strokeColor : "rgba(0,0,220,1)",
+			pointColor : "rgba(0,0,220,1)",
+      pointStrokeColor : "#fff",
+			data : <%= @haulage_by_location.map { |h| h["DurationQueueing"] }.to_s.html_safe %>
+		}
+	]
+}
+var ctx = $("#duration_location_chart").get(0).getContext("2d");
+new Chart(ctx).Bar(data);
+
+var data = {
+	labels : <%= @haulage_by_location.map { |h| h["Location"] }.to_s.html_safe %>,
+	datasets : [
+		{
+			fillColor : "rgba(0,220,0,0.5)",
+			strokeColor : "rgba(0,220,0,1)",
+			data : <%= @haulage_by_location.map { |h| h["Quantity"] }.to_s.html_safe %>
+		}
+	]
+}
+var ctx = $("#haulage_location_chart").get(0).getContext("2d");
+new Chart(ctx).Bar(data);
+
+var data = {
+	labels : <%= @haulage_by_location.map { |h| h["Location"] }.to_s.html_safe %>,
+	datasets : [
+		{
+			fillColor : "rgba(0,220,0,0.5)",
+			strokeColor : "rgba(0,220,0,1)",
+			data : <%= @haulage_by_location.map { |h| h["HaulagePerDuration"] }.to_s.html_safe %>
+		}
+	]
+}
+var ctx = $("#haulage_duration_location_chart").get(0).getContext("2d");
+new Chart(ctx).Bar(data);
+
+var data = {
+	labels : <%= @haulage_by_truck.map { |h| h["Truck"] }.to_s.html_safe %>,
+	datasets : [
+		{
+			fillColor : "rgba(0,220,0,0.5)",
+			strokeColor : "rgba(0,220,0,1)",
+			data : <%= @haulage_by_truck.map { |h| h["Quantity"] }.to_s.html_safe %>
+		}
+	]
+}
+var ctx = $("#haulage_truck_chart").get(0).getContext("2d");
+new Chart(ctx).Bar(data);
+</script>

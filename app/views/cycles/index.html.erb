@@ -1,0 +1,46 @@
+<h2>Cycle Duration (Hours) At Location</h2>
+<section class="current" id="first-level" style="text-align:center">
+  <canvas id="cycleChart" width="1400" height="700"></canvas>
+  <div style="color: rgba(220,220,0,1)">Duration Loading</div>
+  <div style="color: rgba(220,0,0,1)">Duration Travel Loaded</div>
+  <div style="color: rgba(0,220,0,1)">Duration Travel Empty</div>
+  <div style="color: rgba(0,0,220,1)">Duration Queueing</div>
+</section>
+<script>
+var options = {
+  scaleFontColor : "#fff",
+  scaleShowGridLines : false,
+}
+
+var data = {
+	labels : <%= @haulage_by_location.map { |h| h["Location"] }.to_s.html_safe %>,
+	datasets : [
+		{
+			fillColor : "rgba(220,220,0,0.5)",
+			strokeColor : "rgba(220,220,0,1)",
+			data : <%= @haulage_by_location.map { |h| h["DurationLoading"]/60/60 }.to_s.html_safe %>
+		},
+		{
+			fillColor : "rgba(220,0,0,0.5)",
+			strokeColor : "rgba(220,0,0,1)",
+			data : <%= @haulage_by_location.map { |h| h["DurationTravelLoaded"]/60/60 }.to_s.html_safe %>
+		},
+		{
+			fillColor : "rgba(0,220,0,0.5)",
+			strokeColor : "rgba(0,220,0,1)",
+			pointColor : "rgba(0,220,0,1)",
+      pointStrokeColor : "#fff",
+			data : <%= @haulage_by_location.map { |h| h["DurationTravelEmpty"]/60/60 }.to_s.html_safe %>
+		},
+		{
+			fillColor : "rgba(0,0,220,0.5)",
+			strokeColor : "rgba(0,0,220,1)",
+			pointColor : "rgba(0,0,220,1)",
+      pointStrokeColor : "#fff",
+			data : <%= @haulage_by_location.map { |h| h["DurationQueueing"]/60/60 }.to_s.html_safe %>
+		}
+	]
+}
+var ctx = $("#cycleChart").get(0).getContext("2d");
+new Chart(ctx).Bar(data, options);
+</script>

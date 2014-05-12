@@ -1,0 +1,234 @@
+<div class="navigation"></div>
+<section class="current" id="first-level">
+  <div class="grid-items">
+    <a class="grid-item grid-item-big" href="/haulage">
+      <% if haulage_metric(@haulage_by_month) > 0
+           haulage_class = 'up good'
+           indicator = '<span class="fa fa-arrow-up"></span>'
+         elsif haulage_metric(@haulage_by_month) < -20
+           haulage_class = 'down really-bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         else
+           haulage_class = 'down bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         end
+      %>
+      <div class="main <%= haulage_class %>">
+        <div class="panel">
+          <div class="label">
+            Haulage (tonnes)
+          </div>
+          <div class="score">
+            <%= indicator.html_safe %>
+            <%= number_with_precision haulage_metric(@haulage_by_month).abs, precision: 0 %>%
+          </div>
+          <canvas id="haulage_chart" width="450" height="140"></canvas>
+        </div>
+      </div>
+      <div class="secondary">
+        <div class="panel">
+          <div class="label">
+            <h2>Total Month to Date</h2>
+            <h3>Tonnes</h3>
+          </div>
+          <div class="score up good">
+            <span class="fa fa-arrow-up"></span> <%= number_to_human((@movement_type['Ore'] + @movement_type['Waste']), :format => '%n%u', :units => { :thousand => 'k' }) %>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="label">
+            <h2>Ore</h2>
+
+            <h3>Percent of Total</h3>
+          </div>
+          <div class="score down bad">
+            <span class="fa fa-arrow-up"></span> <%= number_with_precision(((@movement_type['Ore'] / (@movement_type['Ore'] + @movement_type['Waste'])) * 100), precision: 2)  %> %
+          </div>
+        </div>
+        <div class="panel">
+          <div class="label">
+            <h2>Waste</h2>
+
+            <h3>Percent of Total</h3>
+          </div>
+          <div class="score down really-bad">
+            <span class="fa fa-arrow-down"></span> <%= number_with_precision(((@movement_type['Waste'] / (@movement_type['Ore'] + @movement_type['Waste'])) * 100), precision: 2)  %> %
+          </div>
+        </div>
+      </div>
+    </a>
+    <a class="grid-item" href="/cycles">
+      <% if cycle_metric(@haulage_by_month) > 0
+           duration_class = 'up good'
+           indicator = '<span class="fa fa-arrow-up"></span>'
+         elsif cycle_metric(@haulage_by_month) < -20
+           duration_class = 'down really-bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         else
+           duration_class = 'down bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         end
+      %>
+      <div class="main down <%= duration_class %>">
+        <div class="panel">
+          <div class="label">
+            Cycle Time (hours)
+          </div>
+          <div class="score">
+            <%= indicator.html_safe %>
+            <%= number_with_precision cycle_metric(@haulage_by_month).abs, precision: 0 %>%
+          </div>
+          <canvas id="duration_chart" width="450" height="140"></canvas>
+        </div>
+      </div>
+    </a>
+    <a class="grid-item" href="/haulage">
+      <div class="main">
+        <div class="panel">
+          <div class="score" style="text-align:center">
+            LOCATIONS
+          </div>
+          <div class="label" style="text-align:center">
+            View Location Metrics
+          </div>
+        </div>
+      </div>
+    </a>
+    <a class="grid-item" href="#">
+      <div class="main">
+        <div class="panel">
+          <%= image_tag('TR201_green.png', height: 180) %>
+        </div>
+        <div class="label" style="text-align:center">
+          <strong>M</strong>INE <strong>M</strong>ONITOR - TEAM TR201<br />
+          Cups of Coffee Consumed <span class="fa fa-arrow-up"></span> 23 <span class="fa fa-coffee"></span><br />
+          Times TR201 Stopped <span class="fa fa-check"></span> 0
+        </div>
+      </div>
+    </a>
+    <a class="grid-item" href="/equipment">
+      <div class="main">
+        <div class="panel">
+          <div class="score" style="text-align:center">
+            TRUCKS
+          </div>
+          <div class="label" style="text-align:center">
+            View Truck Metrics
+          </div>
+        </div>
+      </div>
+    </a>
+    <a class="grid-item" href="#">
+      <% if haulage_metric(@haulage_by_tr201_by_month) > 0
+           haulage_class = 'up good'
+         elsif haulage_metric(@haulage_by_tr201_by_month) < -20
+           haulage_class = 'down really-bad'
+         else
+           haulage_class = 'down bad'
+         end
+      %>
+      <div class="main <%= haulage_class %>">
+        <div class="panel">
+          <div class="label">
+            TR201 (THE BEAST) HAULAGE
+          </div>
+          <div class="score">
+            <%= number_with_precision haulage_metric(@haulage_by_tr201_by_month), precision: 0 %>%
+          </div>
+          <canvas id="tr201_chart" width="450" height="140"></canvas>
+        </div>
+      </div>
+    </a>
+    <a class='grid-item'>
+      <div class='main bad'>
+        <div class='panel'>
+          <div class='score'>
+            <span id='truckName'>
+              TR201
+            </span>
+          </div>
+          <br />
+          <div style="font-size:180%">
+            <div class='label'>
+              Location:
+              <span id='truckLocation'>
+                Your Mom's House
+              </span>
+            </div>
+            <br />
+            <div class='label'>
+              Destination:
+              <span id='truckDestination'>
+                The Bedroom
+              </span>
+            </div>
+          </div>
+      </div>
+      </div>
+    </a>
+    <a class="grid-item" href="#">
+      <div class="main">
+        <br/>
+        <div class="panel">
+        <%= image_tag('goldfields_logo.png', height: 180) %>
+        </div>
+        <div class="label" style="text-align:center">
+          Goldfields Pitram Reporting Data
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<script>
+var options = {
+  scaleFontColor : "#fff",
+  scaleShowGridLines : false,
+  bezierCurve : false
+}
+
+var data = {
+	labels : <%= @haulage_by_month.map { |h| Time.strptime(h['Month'].to_s, '%m').strftime('%b') + ' ' + Time.strptime(h['Year'].to_s, '%Y').strftime('%y') }.to_s.html_safe %>,
+	datasets : [
+		{
+			fillColor : "rgba(220,220,220,0.5)",
+			strokeColor : "rgba(220,220,220,1)",
+			pointColor : "rgba(220,220,220,1)",
+      pointStrokeColor : "#fff",
+			data : <%= @haulage_by_month.map { |h| h["Quantity"] }.to_s.html_safe %>
+		}
+	]
+}
+var ctx = $("#haulage_chart").get(0).getContext("2d");
+new Chart(ctx).Line(data, options);
+
+var data = {
+	labels : <%= @haulage_by_month.map { |h| Time.strptime(h['Month'].to_s, '%m').strftime('%b') + ' ' + Time.strptime(h['Year'].to_s, '%Y').strftime('%y') }.to_s.html_safe %>,
+	datasets : [
+		{
+			fillColor : "rgba(220,220,220,0.5)",
+			strokeColor : "rgba(220,220,220,1)",
+			pointColor : "rgba(220,220,220,1)",
+      pointStrokeColor : "#fff",
+			data : <%= @haulage_by_month.map { |h| h["Duration"]/60/60 }.to_s.html_safe %>
+		}
+	]
+}
+var ctx = $("#duration_chart").get(0).getContext("2d");
+new Chart(ctx).Line(data, options);
+
+var data = {
+	labels : <%= @haulage_by_tr201_by_month.map { |h| Time.strptime(h['Month'].to_s, '%m').strftime('%b') + ' ' + Time.strptime(h['Year'].to_s, '%Y').strftime('%y') }.to_s.html_safe %>,
+	datasets : [
+		{
+			fillColor : "rgba(220,220,220,0.5)",
+			strokeColor : "rgba(220,220,220,1)",
+			pointColor : "rgba(220,220,220,1)",
+      pointStrokeColor : "#fff",
+			data : <%= @haulage_by_tr201_by_month.map { |h| h["Quantity"] }.to_s.html_safe %>
+		}
+	]
+}
+var ctx = $("#tr201_chart").get(0).getContext("2d");
+new Chart(ctx).Line(data, options);
+</script>

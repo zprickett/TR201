@@ -1,0 +1,73 @@
+<div class="navigation"></div>
+<section class="current" id="first-level">
+  <canvas id="dayChart" width="1400" height="700"></canvas>
+</section>  
+<script>
+var options = {
+  scaleFontColor : "#fff",
+  scaleShowGridLines : false,
+  bezierCurve : false,
+  animate:true,
+  scaleShowLabels:true,
+}
+var rainfall = <%= RainFall.new.as_json.html_safe %>;
+var qtylabels = <%= @haulage_MCB.map { |h| h['Day']}.to_s.html_safe %>;
+var qtyvals =  <%= @haulage_MCB.map { |h| h["Quantity"] }.to_s.html_safe %>;
+var qtyvals2 =[];
+var lbls = [];
+var rfall = [];
+var index = 0;
+for (item in rainfall){
+  var dtp = parseRainfallDate(item);
+  if(qtylabels.indexOf(dtp)>-1){
+    qtyvals2.push(qtyvals[qtylabels.indexOf(dtp)]);
+  } else {
+    qtyvals2.push(0);
+  }
+  if(index++%15==0){
+    lbls.push(dtp);
+  } else {
+    lbls.push("");
+  }
+  rfall.push(rainfall[item]*1000);
+};
+
+var data = {
+  labels : lbls,
+	datasets : [
+		{
+			fillColor : "rgba(220,220,220,0.5)",
+			strokeColor : "rgba(220,220,220,0.5)",
+			pointColor : "rgba(220,220,220,0.5)",
+      pointStrokeColor : "rgba(220,220,220,0.5)",
+			data :qtyvals2      },{
+      fillColor:"lightblue",
+      strokeColor:"blue",
+      pointColor:"darkblue",
+      pointStrokeColor:"darkblue",
+      data :rfall
+    }
+	]
+}
+data.labels = data.labels.map(function(item,index){
+  return (index%15==0?item:"");
+});
+var ctx = $("#dayChart").get(0).getContext("2d");
+new Chart(ctx).Bar(data, options);
+
+function twodigits(num){
+  var newnum = "00" + num;
+  return newnum.substr(newnum.length-2);
+}
+
+function parseRainfallDate(date){
+  var dt = new Date(Date.parse(date));
+  var yr =1900+dt.getYear();
+  var mn = dt.getMonth()+1;
+  mn = twodigits(mn);
+  var dy = dt.getDate();
+  dy = twodigits(dy);
+  console.log(yr+"-"+mn+"-"+dy);
+  return (yr+"-"+mn+"-"+dy);
+}
+</script>

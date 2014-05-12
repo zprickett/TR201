@@ -1,0 +1,110 @@
+<h2>Haulage By Month</h2>
+<canvas id="haulage_month_chart" width="800" height="400">
+  
+</canvas>
+<h2>Duration By Month</h2>
+<canvas id="duration_month_chart" width="800" height="400">
+  
+</canvas>
+<h2>Haulage By Location</h2>
+<canvas id="haulage_location_chart" width="800" height="400">
+  
+</canvas>
+<h2>Duration By Location</h2>
+<canvas id="duration_location_chart" width="800" height="400">
+  
+</canvas>
+<script>
+var data = {
+	labels : <%= @haulage_by_month.map { |h| h['Year'].to_s + ' ' + Time.strptime(h['Month'].to_s, '%m').strftime('%B') }.to_s.html_safe %>,
+	datasets : [
+		{
+			fillColor : "rgba(220,220,220,0.5)",
+			strokeColor : "rgba(220,220,220,1)",
+			pointColor : "rgba(220,220,220,1)",
+      pointStrokeColor : "#fff",
+			data : <%= @haulage_by_month.map { |h| h["Quantity"] }.to_s.html_safe %>
+		}
+	]
+}
+var ctx = $("#haulage_month_chart").get(0).getContext("2d");
+new Chart(ctx).Line(data);
+
+var data = {
+	labels : <%= @haulage_by_location.map { |h| h["Location"] }.to_s.html_safe %>,
+	datasets : [
+		{
+			fillColor : "rgba(220,220,220,0.5)",
+			strokeColor : "rgba(220,220,220,1)",
+			data : <%= @haulage_by_location.map { |h| h["Quantity"] }.to_s.html_safe %>
+		}
+	]
+}
+var ctx = $("#haulage_location_chart").get(0).getContext("2d");
+new Chart(ctx).Bar(data);
+
+
+
+var data = {
+	labels : <%= @haulage_by_month.map { |h| h['Year'].to_s + ' ' + Time.strptime(h['Month'].to_s, '%m').strftime('%B') }.to_s.html_safe %>,
+	datasets : [
+		{
+			fillColor : "rgba(220,220,220,0.5)",
+			strokeColor : "rgba(220,220,220,1)",
+			pointColor : "rgba(220,220,220,1)",
+      pointStrokeColor : "#fff",
+			data : <%= @haulage_by_month.map { |h| h["DurationLoading"] }.to_s.html_safe %>
+		},
+		{
+			fillColor : "rgba(220,0,0,0.5)",
+			strokeColor : "rgba(220,0,0,1)",
+			pointColor : "rgba(220,0,0,1)",
+      pointStrokeColor : "#fff",
+			data : <%= @haulage_by_month.map { |h| h["DurationTravelLoaded"] }.to_s.html_safe %>
+		},
+		{
+			fillColor : "rgba(0,220,0,0.5)",
+			strokeColor : "rgba(0,220,0,1)",
+			pointColor : "rgba(0,220,0,1)",
+      pointStrokeColor : "#fff",
+			data : <%= @haulage_by_month.map { |h| h["DurationTravelEmpty"] }.to_s.html_safe %>
+		}
+	]
+}
+var ctx = $("#duration_month_chart").get(0).getContext("2d");
+new Chart(ctx).Line(data);
+
+
+
+var data = {
+	labels : <%= @haulage_by_location.map { |h| h["Location"] }.to_s.html_safe %>,
+	datasets : [
+		{
+			fillColor : "rgba(220,220,0,0.5)",
+			strokeColor : "rgba(220,220,0,1)",
+			data : <%= @haulage_by_location.map { |h| h["DurationLoading"] }.to_s.html_safe %>
+		},
+		{
+			fillColor : "rgba(220,0,0,0.5)",
+			strokeColor : "rgba(220,0,0,1)",
+			data : <%= @haulage_by_location.map { |h| h["DurationTravelLoaded"] }.to_s.html_safe %>
+		},
+		{
+			fillColor : "rgba(0,220,0,0.5)",
+			strokeColor : "rgba(0,220,0,1)",
+			pointColor : "rgba(0,220,0,1)",
+      pointStrokeColor : "#fff",
+			data : <%= @haulage_by_location.map { |h| h["DurationTravelEmpty"] }.to_s.html_safe %>
+		},
+		{
+			fillColor : "rgba(0,0,220,0.5)",
+			strokeColor : "rgba(0,0,220,1)",
+			pointColor : "rgba(0,0,220,1)",
+      pointStrokeColor : "#fff",
+			data : <%= @haulage_by_location.map { |h| h["DurationQueueing"] }.to_s.html_safe %>
+		}
+	]
+}
+var ctx = $("#duration_location_chart").get(0).getContext("2d");
+new Chart(ctx).Bar(data);
+</script>

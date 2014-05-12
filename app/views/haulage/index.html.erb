@@ -1,0 +1,253 @@
+<div class="navigation"></div>
+<section class="current" id="first-level">
+  <div class="grid-items">
+    <a class="grid-item" href="#second-level">
+      <% if haulage_metric(@haulage_by_month['ARG']) > 0
+           haulage_class = 'up good'
+           indicator = '<span class="fa fa-arrow-up"></span>'
+         elsif haulage_metric(@haulage_by_month['ARG']) < -20
+           haulage_class = 'down really-bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         else
+           haulage_class = 'down bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         end
+      %>
+      <div class="main <%= haulage_class %>">
+        <div class="panel">
+          <div class="score">
+            <%= indicator.html_safe %>
+            ARG <%= number_with_precision haulage_metric(@haulage_by_month['ARG']).abs, precision: 0 %>%
+          </div>
+          <!--<div class="label">
+            Argo 
+          </div>-->
+          <canvas id="ARG_chart" width="400" height="160"></canvas>
+        </div>
+      </div>
+    </a>
+    <a class="grid-item" href="#second-level">
+      <% if haulage_metric(@haulage_by_month['ATH']) > 0
+           haulage_class = 'up good'
+           indicator = '<span class="fa fa-arrow-up"></span>'
+         elsif haulage_metric(@haulage_by_month['ATH']) < -20
+           haulage_class = 'down really-bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         else
+           haulage_class = 'down bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         end
+      %>
+      <div class="main <%= haulage_class %>">
+        <div class="panel">
+          <div class="score">
+            <%= indicator.html_safe %>
+            ATH <%= number_with_precision haulage_metric(@haulage_by_month['ATH']).abs, precision: 0 %>%
+          </div>
+          <!--<div class="label">
+            Athena
+          </div>-->
+          <canvas id="ATH_chart" width="400" height="160"></canvas>
+        </div>
+      </div>
+    </a>
+    <a class="grid-item" href="#second-level">
+      <% if haulage_metric(@haulage_by_month['BEL']) > 0
+           haulage_class = 'up good'
+           indicator = '<span class="fa fa-arrow-up"></span>'
+         elsif haulage_metric(@haulage_by_month['BEL']) < -20
+           haulage_class = 'down really-bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         else
+           haulage_class = 'down bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         end
+      %>
+      <div class="main <%= haulage_class %>">
+        <div class="panel">
+          <div class="score">
+            <%= indicator.html_safe %>
+            BEL <%= number_with_precision haulage_metric(@haulage_by_month['BEL']).abs, precision: 0 %>%
+          </div>
+          <!--<div class="label">
+            Bellerophone
+          </div>-->
+          <canvas id="BEL_chart" width="400" height="160"></canvas>
+        </div>
+      </div>
+    </a>
+    <a class="grid-item" href="#second-level">
+      <% if haulage_metric(@haulage_by_month['CAV']) > 0
+           haulage_class = 'up good'
+           indicator = '<span class="fa fa-arrow-up"></span>'
+         elsif haulage_metric(@haulage_by_month['CAV']) < -20
+           haulage_class = 'down really-bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         else
+           haulage_class = 'down bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         end
+      %>
+      <div class="main <%= haulage_class %>">
+        <div class="panel">
+          <div class="score">
+            <%= indicator.html_safe %>
+            CAV <%= number_with_precision haulage_metric(@haulage_by_month['CAV']).abs, precision: 0 %>%
+          </div>
+          <!--<div class="label">
+            Cave Rocks
+          </div>-->
+          <canvas id="CAV_chart" width="400" height="160"></canvas>
+        </div>
+      </div>
+    </a>
+    <a class="grid-item" href="#second-level">
+      <div class="main down">
+        <div class="panel">
+          <div class="label">
+            Haulage (Tonnes)
+          </div>
+          <canvas id="bar_chart" width="450" height="220"></canvas>
+        </div>
+      </div>
+    </a>
+    <a class="grid-item" href="#second-level">
+      <% if haulage_metric(@haulage_by_month['HAM']) > 0
+           haulage_class = 'up good'
+           indicator = '<span class="fa fa-arrow-up"></span>'
+         elsif haulage_metric(@haulage_by_month['HAM']) < -20
+           haulage_class = 'down really-bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         else
+           haulage_class = 'down bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         end
+      %>
+ <div class="main <%= haulage_class %>">
+        <div class="panel">
+          <div class="score">
+            <%= indicator.html_safe %>
+            HAM <%= number_with_precision haulage_metric(@haulage_by_month['HAM']).abs, precision: 0 %>%
+          </div>
+          <!--<div class="label">
+            Hamlet
+          </div>-->
+          <canvas id="HAM_chart" width="400" height="160"></canvas>
+        </div>
+      </div>
+    </a>
+    <a class="grid-item" href="#second-level">
+      <% if haulage_metric(@haulage_by_month['MAR']) > 0
+           haulage_class = 'up good'
+           indicator = '<span class="fa fa-arrow-up"></span>'
+         elsif haulage_metric(@haulage_by_month['MAR']) < -20
+           haulage_class = 'down really-bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         else
+           haulage_class = 'down bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         end
+      %>
+      <div class="main <%= haulage_class %>">
+        <div class="panel">
+          <div class="score">
+            <%= indicator.html_safe %>
+            MAR <%= number_with_precision haulage_metric(@haulage_by_month['MAR']).abs, precision: 0 %>%
+          </div>
+          <!--<div class="label">
+            Mars
+          </div>-->
+          <canvas id="MAR_chart" width="400" height="160"></canvas>
+        </div>
+      </div>
+    </a>
+    <a class="grid-item" href="haulage/mcb">
+      <% if haulage_metric(@haulage_by_month['MCB']) > 0
+           haulage_class = 'up good'
+           indicator = '<span class="fa fa-arrow-up"></span>'
+         elsif haulage_metric(@haulage_by_month['MCB']) < -20
+           haulage_class = 'down really-bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         else
+           haulage_class = 'down bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         end
+      %>
+      <div class="main <%= haulage_class %>">
+        <div class="panel">
+          <div class="score">
+            <%= indicator.html_safe %>
+            MCB <%= number_with_precision haulage_metric(@haulage_by_month['MCB']).abs, precision: 0 %>%
+          </div>
+          <!--<div class="label">
+            Mars Cut Back
+          </div>-->
+          <canvas id="MCB_chart" width="400" height="160"></canvas>
+        </div>
+      </div>
+    </a>
+
+    <a class="grid-item" href="pdy.html">
+      <% if haulage_metric(@haulage_by_month['PDY']) > 0
+           haulage_class = 'up good'
+           indicator = '<span class="fa fa-arrow-up"></span>'
+         elsif haulage_metric(@haulage_by_month['PDY']) < -20
+           haulage_class = 'down really-bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         else
+           haulage_class = 'down bad'
+           indicator = '<span class="fa fa-arrow-down"></span>'
+         end
+      %>
+      <div class="main <%= haulage_class %>">
+        <div class="panel">
+          <div class="score">
+            <%= indicator.html_safe %>
+            PDY <%= number_with_precision haulage_metric(@haulage_by_month['PDY']).abs, precision: 0 %>%
+          </div>
+          <!--<div class="label">
+            Paddy's Pit
+          </div>-->
+          <canvas id="PDY_chart" width="400" height="160"></canvas>
+        </div>
+      </div>
+    </a>
+
+   
+</section>
+<script>
+var options = {
+  scaleFontColor : "#fff",
+  scaleShowGridLines : false,
+  bezierCurve : false
+}
+<% @locations.each do |loc| %>
+var data = {
+	labels : <%= @haulage_by_month[loc].map { |h| Time.strptime(h['Month'].to_s, '%m').strftime('%b') + ' ' + Time.strptime(h['Year'].to_s, '%Y').strftime('%y') }.to_s.html_safe %>,
+	datasets : [
+		{
+			fillColor : "rgba(220,220,220,0.5)",
+			strokeColor : "rgba(220,220,220,1)",
+			pointColor : "rgba(220,220,220,1)",
+      pointStrokeColor : "#fff",
+			data : <%= @haulage_by_month[loc].map { |h| h["Quantity"] }.to_s.html_safe %>
+		}
+	]
+}
+var ctx = $("#<%=loc%>_chart").get(0).getContext("2d");
+new Chart(ctx).Line(data, options);
+<% end %>
+
+var data = {
+	labels : <%= @haulage_by_location.map { |h| h["Location"] }.to_s.html_safe %>,
+	datasets : [
+		{
+			fillColor : "rgba(0,220,0,0.5)",
+			strokeColor : "rgba(0,220,0,1)",
+			data : <%= @haulage_by_location.map { |h| h["Quantity"] }.to_s.html_safe %>
+		}
+	]
+}
+var ctx = $("#bar_chart").get(0).getContext("2d");
+new Chart(ctx).Bar(data, options);
+</script>

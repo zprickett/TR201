@@ -1,0 +1,23 @@
+<div class="navigation"></div>
+<section class="current" id="first-level" style="text-align:center">
+  <canvas id="truckChart" width="1400" height="700"> 
+</section>
+<script>
+var options = {
+  scaleFontColor : "#fff",
+  scaleShowGridLines : false,
+  bezierCurve : false
+}
+var data = {
+	labels : <%= @haulage_by_truck.map { |h| h["Truck"] }.to_s.html_safe %>,
+	datasets : [
+		{
+			fillColor : "rgba(0,220,0,0.5)",
+			strokeColor : "rgba(0,220,0,1)",
+			data : <%= @haulage_by_truck.map { |h| h["Quantity"] }.to_s.html_safe %>
+		}
+	]
+}
+var ctx = $("#truckChart").get(0).getContext("2d");
+new Chart(ctx).Bar(data, options);
+</script>
